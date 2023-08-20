@@ -1,0 +1,5 @@
+opencv-python~=4.8.0.76
+mediapipe~=0.10.3
+numpy~=1.25.2
+comtypes~=1.2.0
+pycaw~=20230407
