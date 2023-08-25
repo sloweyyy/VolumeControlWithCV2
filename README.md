@@ -1,4 +1,3 @@
-# Hand Gesture Volume Control 12
 
 Use hand gestures detected with MediaPipe to control your system volume.
 
