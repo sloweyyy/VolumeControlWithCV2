@@ -32,7 +32,6 @@ This project showcases the use of OpenCV and MediaPipe libraries to perform two 
 - keyboard (for the third script)
 
 You can install the required libraries using the following command:
-
 ```
 pip install opencv-python mediapipe pycaw comtypes keyboard
 ```
