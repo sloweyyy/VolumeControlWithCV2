@@ -3,3 +3,5 @@ mediapipe~=0.10.3
 numpy~=1.25.2
 comtypes~=1.2.0
 pycaw~=20230407
+matplotlib~=3.7.2
+ipython~=8.14.0

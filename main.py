@@ -1,11 +1,12 @@
-from ctypes import cast, POINTER
 from math import hypot
-
 import cv2
 import mediapipe as mp
 import numpy as np
+from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+import matplotlib.pyplot as plt
+import keyboard
 
 cap = cv2.VideoCapture(0)
 
@@ -18,6 +19,8 @@ interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 
 volMin, volMax = volume.GetVolumeRange()[:2]
+
+fingerCount = 0
 
 while True:
     success, img = cap.read()
@@ -33,6 +36,18 @@ while True:
                 lmList.append([id, cx, cy])
             mpDraw.draw_landmarks(img, handlandmark, mpHands.HAND_CONNECTIONS)
 
+            fingerCount = 0
+            if lmList != []:
+                for id, lm in enumerate(handlandmark.landmark):
+                    if id in [4, 8, 12, 16, 20]:
+                        if lm.y < lmList[id - 2][2]:
+                            fingerCount += 1
+
+    if fingerCount == 3:
+        volume.SetMute(1, None)  # Mute the volume
+    else:
+        volume.SetMute(0, None)  # Unmute the volume
+
     if lmList != []:
         x1, y1 = lmList[4][1], lmList[4][2]
         x2, y2 = lmList[8][1], lmList[8][2]
@@ -47,10 +62,9 @@ while True:
         print(vol, length)
         volume.SetMasterVolumeLevel(vol, None)
 
-        # Hand range 15 - 220
-        # Volume range -63.5 - 0.0
+    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    plt.draw()
+    plt.pause(0.01)
 
-    cv2.imshow('Image', img)
-    if cv2.waitKey(1) & 0xff == ord('q'):
+    if keyboard.is_pressed('q'):
         break
-
