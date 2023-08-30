@@ -1,85 +1,71 @@
-# VolumeControlWithCV2
+# Volume Control and Facial Expression Recognition with OpenCV and MediaPipe
 
-Welcome to the **VolumeControlWithCV2** repository! This repository contains a project that utilizes computer vision
-techniques to control the volume of an application using hand gestures. By leveraging the power of OpenCV and Python,
-this project provides an innovative way to interact with technology.
+This repository contains Python scripts that demonstrate how to control the system volume based on hand gestures and perform facial expression recognition using OpenCV and MediaPipe libraries.
 
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Features](#features)
-- [Getting Started](#getting-started)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Scripts](#scripts)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Introduction
 
-**VolumeControlWithCV2** is a project aimed at demonstrating how computer vision can be used to control the volume of an
-application. By tracking hand gestures and movements using OpenCV, the project enables users to adjust the volume levels
-by simple hand motions.
+This project showcases the use of OpenCV and MediaPipe libraries to perform two main tasks:
 
-## Features
+1. **Volume Control using Hand Gestures**: The first script (`volume_control_hand_gestures.py`) demonstrates how to control the system volume by interpreting specific hand gestures using the MediaPipe Hands module.
 
-- Hand gesture recognition for volume control.
-- Real-time monitoring of hand movements.
-- User-friendly interface for adjusting volume.
-- Customizable gesture-to-volume mapping.
+2. **Facial Expression Recognition**: The second script (`facial_expression_recognition.py`) illustrates how to detect and recognize facial expressions in real-time using the MediaPipe Face Detection module.
 
-## Getting Started
+# Installation
 
-To get started with the **VolumeControlWithCV2** project, follow these steps:
+## Requirements
 
-### Requirements
+- Python 3.x
+- OpenCV
+- MediaPipe
+- pycaw
+- comtypes
+- keyboard (for the third script)
 
-- Python (version 3.6 or higher)
-- OpenCV library
-- Audio output device (speakers or headphones)
+You can install the required libraries using the following command:
 
-### Installation
+```
+pip install opencv-python mediapipe pycaw comtypes keyboard
+```
 
-1. **Clone the Repository:** Begin by cloning this repository to your local machine using the following command:
+## Clone Repository
+1. Clone this repository to your local machine:
+```
+git clone https://github.com/sloweyyy/VolumeControlWithCV2.git
+```
+2. Navigate to the repository directory:
+```
+cd VolumeControlWithCV2
+```
+Run the desired script using Python.
 
-   `git clone https://github.com/sloweyyy/VolumeControlWithCV2.git`
+# Usage
+1. Run the scripts as described in the Installation section.
+2. Follow the on-screen instructions for each script.
+3. For the volume control script, use hand gestures to control the system volume.
+4. For the facial expression recognition script, observe the real-time detection of facial expressions.
 
-2. **Navigate to the Directory:** Move into the cloned repository's directory:
+## Scripts
 
-`cd VolumeControlWithCV2`
+- `volume_control_hand_gestures.py`: Control the system volume using hand gestures detected by the MediaPipe Hands module.
 
-3. **Install Dependencies:** Install the required Python packages using pip:
+- `facial_expression_recognition.py`: Detect and recognize facial expressions in real-time using the MediaPipe Face Detection module.
 
-`pip install -r requirements.txt`
-
-### Usage
-
-1. **Run the Application:** Execute the main Python script to start the volume control application:
-
-`python main.py`
-
-2. **Gesture Control:** Position your hand in front of the camera and use the predefined gestures to control the volume.
-   Adjust the volume up or down by moving your hand accordingly.
-
-3. **Customization:** Modify the gesture-to-volume mapping or other settings in the code to suit your preferences.
+- `combined_volume_and_expression.py`: Combines both volume control and facial expression recognition functionalities.
 
 ## Contributing
 
-Contributions to this repository are welcome! If you have ideas for improvements, bug fixes, or new features, please
-feel free to open issues or pull requests. Be sure to follow the repository's code of conduct.
+Contributions are welcome! If you find any issues or have improvements to suggest, feel free to open an issue or submit a pull request.
 
 ## License
 
-The content of this repository is available under the [MIT License](LICENSE). Make sure to review and understand the
-license terms before using the code for any purpose.
-
----
-
-Explore the exciting world of volume control through hand gestures with **VolumeControlWithCV2**. If you have any
-questions, concerns, or ideas, don't hesitate to get in touch. Let's enhance the way we interact with technology
-together!
-
-
-
-  
-
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
