@@ -32,7 +32,6 @@ while True:
                 h, w, _ = img.shape
                 cx, cy = int(lm.x * w), int(lm.y * h)
                 lmList.append([id, cx, cy])
-            mpDraw.draw_landmarks(img, handlandmark, mpHands.HAND_CONNECTIONS)
 
             fingerCount = 0
             if lmList != []:
@@ -50,21 +49,13 @@ while True:
         x1, y1 = lmList[4][1], lmList[4][2]
         x2, y2 = lmList[8][1], lmList[8][2]
 
-        cv2.circle(img, (x1, y1), 4, (255, 0, 0), cv2.FILLED)
-        cv2.circle(img, (x2, y2), 4, (255, 0, 0), cv2.FILLED)
-        cv2.line(img, (x1, y1), (x2, y2), (255, 0, 0), 3)
-
         length = hypot(x2 - x1, y2 - y1)
 
         vol = np.interp(length, [15, 220], [volMin, volMax])
-        print(vol, length)
         volume.SetMasterVolumeLevel(vol, None)
 
         # Hand range 15 - 220
         # Volume range -63.5 - 0.0
-
-    cv2.putText(img, f"Finger Count: {fingerCount}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-    cv2.imshow('Hand Gesture Volume Control', img)
 
     if cv2.waitKey(1) & 0xff == ord('q'):
         break
