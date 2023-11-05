@@ -1,7 +1,6 @@
 import cv2
 import mediapipe as mp
-import pyautogui as pag
-import time
+import pyautogui
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -11,8 +10,8 @@ mp_hands = mp.solutions.hands
 cap = cv2.VideoCapture(0)
 with mp_hands.Hands(
         model_complexity=0,
-        min_detection_confidence=0.7,
-        min_tracking_confidence=0.7) as hands:
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5) as hands:
     while cap.isOpened():
         success, image = cap.read()
         if not success:
@@ -34,59 +33,56 @@ with mp_hands.Hands(
         fingerCount = 0
 
         if results.multi_hand_landmarks:
-
             for hand_landmarks in results.multi_hand_landmarks:
                 # Get hand index to check label (left or right)
                 handIndex = results.multi_hand_landmarks.index(hand_landmarks)
                 handLabel = results.multi_handedness[handIndex].classification[0].label
 
                 # Set variable to keep landmarks positions (x and y)
-                handLandmarks = []
+                hand_landmarks = []
 
                 # Fill list with x and y positions of each landmark
                 for landmarks in hand_landmarks.landmark:
-                    handLandmarks.append([landmarks.x, landmarks.y])
+                    hand_landmarks.append([landmarks.x, landmarks.y])
 
                 # Test conditions for each finger: Count is increased if finger is
-                #   considered raised.
+                # considered raised.
                 # Thumb: TIP x position must be greater or lower than IP x position,
-                #   depending on hand label.
-                if handLabel == "Left" and handLandmarks[4][0] > handLandmarks[3][0]:
+                # depending on hand label.
+                if handLabel == "Left" and hand_landmarks[4][0] > hand_landmarks[3][0]:
                     fingerCount = fingerCount+1
-                elif handLabel == "Right" and handLandmarks[4][0] < handLandmarks[3][0]:
+                elif handLabel == "Right" and hand_landmarks[4][0] < hand_landmarks[3][0]:
                     fingerCount = fingerCount+1
 
                 # Other fingers: TIP y position must be lower than PIP y position,
-                #   as image origin is in the upper left corner.
-                if handLandmarks[8][1] < handLandmarks[6][1]:       #Index finger
+                # as image origin is in the upper left corner.
+                if hand_landmarks[8][1] < hand_landmarks[6][1]:       #Index finger
                     fingerCount = fingerCount+1
-                if handLandmarks[12][1] < handLandmarks[10][1]:     #Middle finger
+                if hand_landmarks[12][1] < hand_landmarks[10][1]:     #Middle finger
                     fingerCount = fingerCount+1
-                if handLandmarks[16][1] < handLandmarks[14][1]:     #Ring finger
+                if hand_landmarks[16][1] < hand_landmarks[14][1]:     #Ring finger
                     fingerCount = fingerCount+1
-                if handLandmarks[20][1] < handLandmarks[18][1]:     #Pinky
+                if hand_landmarks[20][1] < hand_landmarks[18][1]:     #Pinky
                     fingerCount = fingerCount+1
 
-                if fingerCount == 3:
-                    pag.press('nexttrack')
-                    # time.sleep(2)  # Tạm dừng trong 2 giây
-                elif fingerCount == 4:
-                    pag.press('prevtrack')
-                    # time.sleep(2)  # Tạm dừng trong 2 giây
-                elif fingerCount == 5:
-                    pag.press('playpause')
-                    # time.sleep(2)  # Tạm dừng trong 2 giây
+        # Perform actions based on finger count
+        if fingerCount == 3:
+            # Implement your "next" action here
+            pyautogui.press('nexttrack')
+        elif fingerCount == 4:
+            # Implement your "back" action here
+            pyautogui.press('prevtrack')
+        elif fingerCount == 5:
+            # Implement your "pause" action here
+            pyautogui.press('space')
 
-                # Draw hand landmarks
-                mp_drawing.draw_landmarks(
-                    image,
-                    hand_landmarks,
-                    mp_hands.HAND_CONNECTIONS,
-                    mp_drawing_styles.get_default_hand_landmarks_style(),
-                    mp_drawing_styles.get_default_hand_connections_style())
-
-        # Display finger count
-        cv2.putText(image, str(fingerCount), (50, 450), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 0, 0), 10)
+        # Draw hand landmarks
+        mp_drawing.draw_landmarks(
+            image,
+            results.multi_hand_landmarks[0],  # Sử dụng results.multi_hand_landmarks thay vì hand_landmarks
+            mp_hands.HAND_CONNECTIONS,
+            mp_drawing_styles.get_default_hand_landmarks_style(),
+            mp_drawing_styles.get_default_hand_connections_style())
 
         # Display image
         cv2.imshow('MediaPipe Hands', image)

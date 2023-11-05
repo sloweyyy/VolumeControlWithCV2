@@ -5,3 +5,5 @@ comtypes~=1.2.0
 pycaw~=20230407
 matplotlib~=3.7.2
 ipython~=8.14.0
+PyAutoGUI~=0.9.54
+keyboard~=0.13.5
